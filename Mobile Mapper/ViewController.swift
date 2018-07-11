@@ -8,11 +8,13 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
 class ViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     let northwesternAnnotation = MKPointAnnotation()
+    let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +24,8 @@ class ViewController: UIViewController {
         northwesternAnnotation.coordinate = coordinate
         northwesternAnnotation.title = "Northwestern University"
         mapView.addAnnotation(northwesternAnnotation)
+        locationManager.requestWhenInUseAuthorization()
+        mapView.showsUserLocation = true
     }
 
     override func didReceiveMemoryWarning() {
