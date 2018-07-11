@@ -15,6 +15,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     let northwesternAnnotation = MKPointAnnotation()
     let locationManager = CLLocationManager()
+    let address = "Mount Rushmore"
+    let geocoder = CLGeocoder()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +28,14 @@ class ViewController: UIViewController {
         mapView.addAnnotation(northwesternAnnotation)
         locationManager.requestWhenInUseAuthorization()
         mapView.showsUserLocation = true
+        geocoder.geocodeAddressString(address) { (placemarks, error) in
+            for placemark in placemarks! {
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = (placemark.location?.coordinate)!
+                annotation.title = placemark.name
+                self.mapView.addAnnotation(annotation)
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
